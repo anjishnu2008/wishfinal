@@ -10,7 +10,7 @@
       padding: 0;
       overflow: hidden;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
     }
     .slide {
       width: 100vw;
@@ -24,6 +24,7 @@
       transition: opacity 1s ease;
       padding: 20px;
       box-sizing: border-box;
+      color: #333;
     }
     .hidden {
       opacity: 0;
@@ -32,6 +33,11 @@
     h1 {
       font-size: 8vw;
       color: #e75480;
+      animation: pop 1s infinite alternate;
+    }
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
     }
     .message {
       background: rgba(255, 255, 255, 0.9);
@@ -41,7 +47,6 @@
       max-height: 80vh;
       overflow-y: auto;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      color: #333;
       backdrop-filter: blur(5px);
       font-size: 4vw;
     }
@@ -52,6 +57,8 @@
   </style>
 </head>
 <body>
+  <canvas id="confetti-canvas"></canvas>
+
   <div class="slide" id="slide1">
     <h1>🎉 Happy Birthday Rara! 🎂</h1>
   </div>
@@ -70,10 +77,63 @@
   </div>
 
   <script>
+    // Slide change after 3 seconds
     setTimeout(() => {
       document.getElementById('slide1').classList.add('hidden');
       document.getElementById('slide2').classList.remove('hidden');
-    }, 3000); // Switch slide after 3 seconds
+    }, 3000);
+
+    // Confetti code
+    var canvas = document.getElementById('confetti-canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    var confetti = [];
+    for (var i = 0; i < 150; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 100,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)",
+        tilt: Math.random() * 10 - 10
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(function(c) {
+        ctx.beginPath();
+        ctx.lineWidth = c.r / 2;
+        ctx.strokeStyle = c.color;
+        ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
+        ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
+        ctx.stroke();
+      });
+
+      update();
+    }
+
+    function update() {
+      confetti.forEach(function(c, i) {
+        c.y += Math.cos(c.d) + 1 + c.r / 2;
+        c.x += Math.sin(c.d);
+
+        if (c.y > canvas.height) {
+          confetti[i] = {
+            x: Math.random() * canvas.width,
+            y: -10,
+            r: c.r,
+            d: c.d,
+            color: c.color,
+            tilt: c.tilt
+          };
+        }
+      });
+    }
+
+    setInterval(draw, 20);
   </script>
 </body>
 </html>
