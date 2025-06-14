@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday Rara 🎉</title>
   <style>
     body {
       margin: 0;
       padding: 0;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+    }
+    .slide {
+      width: 100vw;
       height: 100vh;
-      background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+      position: absolute;
+      top: 0; left: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow-y: auto; /* allows phone scrolling */
-      font-family: 'Poppins', sans-serif;
-    }
-    .container {
       text-align: center;
+      transition: opacity 1s ease;
       padding: 20px;
+      box-sizing: border-box;
+    }
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    h1 {
+      font-size: 8vw;
+      color: #e75480;
     }
     .message {
       background: rgba(255, 255, 255, 0.9);
       padding: 20px;
       border-radius: 15px;
-      max-width: 350px;
-      max-height: 80vh; /* mobile safe */
-      overflow-y: auto; /* scroll if text overflows */
+      max-width: 90vw;
+      max-height: 80vh;
+      overflow-y: auto;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       color: #333;
       backdrop-filter: blur(5px);
-      margin: auto;
+      font-size: 4vw;
     }
-    h1 {
-      font-size: 24px;
-      color: #e75480;
-      margin-bottom: 15px;
-    }
-    p {
-      font-size: 16px;
-      line-height: 1.5;
+    @media(min-width: 600px){
+      h1 { font-size: 48px; }
+      .message { font-size: 18px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="slide" id="slide1">
+    <h1>🎉 Happy Birthday Rara! 🎂</h1>
+  </div>
+
+  <div class="slide hidden" id="slide2">
     <div class="message">
-      <h1>Happy Birthday, Rara! 🎂🌟</h1>
       <p>
         I swear… you make life feel like the best part of an Avenged Sevenfold song — unexpected, thrilling, and kinda impossible to get out of my head. 😈😏<br><br>
         You’re honestly way too good at being awesome — sweet when you want to be, funny when I least expect it, and always somehow making me smile for no reason.<br><br>
@@ -57,6 +68,13 @@
       </p>
     </div>
   </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('slide1').classList.add('hidden');
+      document.getElementById('slide2').classList.remove('hidden');
+    }, 3000); // Switch slide after 3 seconds
+  </script>
 </body>
 </html>
 
