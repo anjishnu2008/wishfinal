@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Happy Birthday Rara 🎉</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
       margin: 0;
       padding: 0;
@@ -12,6 +13,7 @@
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #ffecd2, #fcb69f);
     }
+
     .slide {
       width: 100vw;
       height: 100vh;
@@ -26,115 +28,106 @@
       box-sizing: border-box;
       color: #333;
     }
+
     .hidden {
       opacity: 0;
       pointer-events: none;
     }
+
     h1 {
-      font-size: 8vw;
-      color: #e75480;
-      animation: pop 1s infinite alternate;
+      font-size: 3em;
+      color: #ff4e50;
     }
-    @keyframes pop {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
-    }
-    .message {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 90vw;
-      max-height: 80vh;
-      overflow-y: auto;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(5px);
-      font-size: 4vw;
-    }
-    @media(min-width: 600px){
-      h1 { font-size: 48px; }
-      .message { font-size: 18px; }
+
+    p {
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
-  <canvas id="confetti-canvas"></canvas>
 
+  <!-- First Slide -->
   <div class="slide" id="slide1">
-    <h1>🎉 Happy Birthday Rara! 🎂</h1>
+    <div>
+      <h1>🎉 Happy Birthday, Rara! 🎉</h1>
+      <p>Today the world shines a little brighter just because of you!</p>
+    </div>
   </div>
 
+  <!-- Second Slide -->
   <div class="slide hidden" id="slide2">
-    <div class="message">
+    <div>
+      <h1>Selamat Ulang Tahun, Rara! 🎂😈</h1>
       <p>
-        I swear… you make life feel like the best part of an Avenged Sevenfold song — unexpected, thrilling, and kinda impossible to get out of my head. 😈😏<br><br>
+        I swear… you make life feel like the best part of an Avenged Sevenfold song — unexpected, thrilling, and kinda impossible to get out of my head. 😏<br><br>
         You’re honestly way too good at being awesome — sweet when you want to be, funny when I least expect it, and always somehow making me smile for no reason.<br><br>
         So here’s your little corner of the internet — made just for you. Hope this page makes you smile like you make me (which is... a lot, by the way).<br><br>
-        You’re officially my Diane Castro now — no escape. Like Gadis Kretek fate sealed. 🔥<br><br>
-        Selamat Ulang Tahun, Rara! 🎉 Stay as amazing as ever — and hey... if you play your favorite A7X song today, think of me vibing along somewhere. 😉🎶<br><br>
-        By the way... you still owe me a cake slice. Don’t think I forgot. 👀🎂
+        Oh and by the way... you totally remind me of Diane Castro from Gadis Kretek — my very own Diane. 😉<br><br>
+        We met on PDB on 21st February... and what a lucky click that was. 😁<br><br>
+        Stay amazing, Rara. And don’t forget — if you blast some A7X today, I’ll be vibing too. 😈🎶
       </p>
     </div>
   </div>
 
+  <!-- Confetti -->
+  <canvas id="confetti"></canvas>
+
+  <!-- First Slide Music -->
+  <audio id="bgmusic1" src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" autoplay loop></audio>
+
+  <!-- Second Slide Music (A7X vibe, far away volume) -->
+  <audio id="bgmusic2" src="https://samplelib.com/lib/preview/mp3/sample-15s.mp3" loop></audio>
+
   <script>
-    // Slide change after 3 seconds
+    const slide1 = document.getElementById('slide1');
+    const slide2 = document.getElementById('slide2');
+    const music1 = document.getElementById('bgmusic1');
+    const music2 = document.getElementById('bgmusic2');
+
     setTimeout(() => {
-      document.getElementById('slide1').classList.add('hidden');
-      document.getElementById('slide2').classList.remove('hidden');
-    }, 3000);
+      slide1.classList.add('hidden');
+      slide2.classList.remove('hidden');
+      music1.pause();
+      music2.volume = 0.3; // Low volume, like distant A7X vibe
+      music2.play();
+    }, 5000); // 5 seconds on first slide
 
-    // Confetti code
-    var canvas = document.getElementById('confetti-canvas');
-    var ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Confetti
+    const confetti = document.getElementById('confetti');
+    const ctx = confetti.getContext('2d');
+    confetti.width = window.innerWidth;
+    confetti.height = window.innerHeight;
+    let pieces = [];
 
-    var confetti = [];
-    for (var i = 0; i < 150; i++) {
-      confetti.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 6 + 4,
-        d: Math.random() * 100,
-        color: "hsl(" + Math.random() * 360 + ",100%,50%)",
-        tilt: Math.random() * 10 - 10
+    for (let i = 0; i < 100; i++) {
+      pieces.push({
+        x: Math.random() * confetti.width,
+        y: Math.random() * confetti.height,
+        size: Math.random() * 8 + 2,
+        speed: Math.random() * 3 + 1,
+        angle: Math.random() * 360
       });
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confetti.forEach(function(c) {
-        ctx.beginPath();
-        ctx.lineWidth = c.r / 2;
-        ctx.strokeStyle = c.color;
-        ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
-        ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
-        ctx.stroke();
-      });
-
-      update();
     }
 
     function update() {
-      confetti.forEach(function(c, i) {
-        c.y += Math.cos(c.d) + 1 + c.r / 2;
-        c.x += Math.sin(c.d);
-
-        if (c.y > canvas.height) {
-          confetti[i] = {
-            x: Math.random() * canvas.width,
-            y: -10,
-            r: c.r,
-            d: c.d,
-            color: c.color,
-            tilt: c.tilt
-          };
+      ctx.clearRect(0, 0, confetti.width, confetti.height);
+      for (let i = 0; i < pieces.length; i++) {
+        let p = pieces[i];
+        p.y += p.speed;
+        if (p.y > confetti.height) {
+          p.y = -10;
+          p.x = Math.random() * confetti.width;
         }
-      });
+        ctx.fillStyle = `hsl(${p.angle}, 100%, 50%)`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(update);
     }
-
-    setInterval(draw, 20);
+    update();
   </script>
+
 </body>
 </html>
 
