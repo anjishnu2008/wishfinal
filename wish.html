@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday Rara! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #333;
+            text-align: center;
+            padding: 50px;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        .slide {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide active" id="slide1">
+        <h1>Happy Birthday, Rara! 🎂🎉</h1>
+        <p>Selamat Ulang Tahun! 🥳 Today the world shines a little brighter — because you exist!</p>
+        <audio autoplay>
+            <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="slide" id="slide2">
+        <h1>Hey Rara! 😈</h1>
+        <p>
+            I swear… you make life feel like the best part of an Avenged Sevenfold song — unexpected, thrilling, and kinda impossible to get out of my head. 😏<br><br>
+            You're sweet, funny, and dangerously good at making me smile for no reason. Like... how dare you, seriously? 😉<br><br>
+            So here’s your own little corner of the internet — made just for you. Hope this makes you smile like you make me (which is... a lot, by the way).<br><br>
+            Oh and by the way... you're totally my Diane Castro from Gadis Kretek. 😉<br><br>
+            Selamat Ulang Tahun, Rara! 🎉 Stay amazing — and if you play your fav A7X track today, imagine me vibing along somewhere. 😈🎸<br><br>
+            Save me a slice of cake, will you? 🎂
+        </p>
+        <audio autoplay>
+            <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Avenged_Sevenfold/Afterlife/Avenged_Sevenfold_-_Afterlife.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <canvas id="confetti"></canvas>
+
+    <script>
+        // Slide change after 5 seconds
+        setTimeout(() => {
+            document.getElementById('slide1').classList.remove('active');
+            document.getElementById('slide2').classList.add('active');
+        }, 5000);
+
+        // Confetti animation
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const pieces = [];
+        const numberOfPieces = 100;
+
+        for(let i = 0; i < numberOfPieces; i++) {
+            pieces.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 10 + 2,
+                speed: Math.random() * 3 + 1,
+                color: `hsl(${Math.random() * 360}, 70%, 60%)`
+            });
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const p of pieces) {
+                p.y += p.speed;
+                if (p.y > canvas.height) {
+                    p.y = 0;
+                    p.x = Math.random() * canvas.width;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+            }
+            requestAnimationFrame(update);
+        }
+
+        update();
+    </script>
+</body>
+</html>
