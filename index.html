@@ -41,6 +41,29 @@
 
     p {
       font-size: 1.2em;
+      line-height: 1.6;
+    }
+
+    /* Auto-scrolling text for second slide */
+    .scroll-text {
+      height: 60vh; /* height of visible area */
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scroll-text p {
+      position: absolute;
+      width: 100%;
+      animation: scrollText 40s linear infinite; /* Adjust 40s for slower/faster */
+    }
+
+    @keyframes scrollText {
+      0% {
+        top: 100%;
+      }
+      100% {
+        top: -100%;
+      }
     }
   </style>
 </head>
@@ -58,20 +81,16 @@
   <div class="slide hidden" id="slide2">
     <div>
       <h1>Selamat Ulang Tahun, Rara! 🎂😈</h1>
-      <p>
-       Happy real Birthday, Rara! 🎂✨
-
-No more 31st June tricks. No secret evil witch laughs (okay... maybe just one 👀) — this time it’s for the actual Queen of June 25. 👑
-
-You really turned this month into a full-on drama series huh? Plot twist after plot twist... making me question calendars, time, space — even reality itself. 😩😂 But no worries, love. You made it fun anyway. 🤍
-
-So here’s to you — the sweet, evil-witch-laughing, A7X-blasting troublemaker… but somehow still my Dasiyah — bold, full of surprises, impossible to forget… and always my queen. 😌👑
-
-The one who made me your personal web designer, your daily birthday wisher, and left me wondering if your birthday was ever real in the first place. 😭🎂
-
-Stay awesome. Stay confusing. Stay you.
-But next time... just one birthday, okay? Or I really will have to make 365 websites for you. 😉
-      </p>
+      <div class="scroll-text">
+        <p>
+          Happy real Birthday, Rara! 🎂✨<br><br>
+          No more 31st June tricks. No secret evil witch laughs (okay... maybe just one 👀) — this time it’s for the actual Queen of June 25. 👑<br><br>
+          You really turned this month into a full-on drama series huh? Plot twist after plot twist... making me question calendars, time, space — even reality itself. 😩😂 But no worries, love. You made it fun anyway. 🤍<br><br>
+          So here’s to you — the sweet, evil-witch-laughing, A7X-blasting troublemaker… but somehow still my Dasiyah — bold, full of surprises, impossible to forget… and always my queen. 😌👑<br><br>
+          The one who made me your personal web designer, your daily birthday wisher, and left me wondering if your birthday was ever real in the first place. 😭🎂<br><br>
+          Stay awesome. Stay confusing. Stay you. But next time... just one birthday, okay? Or I really will have to make 365 websites for you. 😉
+        </p>
+      </div>
     </div>
   </div>
 
@@ -94,9 +113,9 @@ But next time... just one birthday, okay? Or I really will have to make 365 webs
       slide1.classList.add('hidden');
       slide2.classList.remove('hidden');
       music1.pause();
-      music2.volume = 0.3; // Low volume, like distant A7X vibe
+      music2.volume = 0.3; // low volume for distant A7X vibe
       music2.play();
-    }, 5000); // 5 seconds on first slide
+    }, 5000); // 5 seconds before switching slides
 
     // Confetti
     const confetti = document.getElementById('confetti');
@@ -136,4 +155,5 @@ But next time... just one birthday, okay? Or I really will have to make 365 webs
 
 </body>
 </html>
+
 
